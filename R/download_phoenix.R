@@ -47,7 +47,7 @@ download_phoenix <- function(destpath){
     con <- file(filename, open = "wb")
     writeBin(bin, con)
     close(con)
-    unzip(filename, exdir = ".", unzip = "internal", setTimes = FALSE)
+    unzip(filename, exdir = destpath, unzip = "internal", setTimes = FALSE)
     unlink(filename)
 }
   message("Downloading and unzipping files.")
