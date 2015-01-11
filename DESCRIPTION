@@ -1,0 +1,20 @@
+Package: phoxy
+Title: Easily Download, Ingest, and Manipulate the Phoenix Event Dataset
+Version: 0.1
+Authors@R: as.person("Andy Halterman <ahalterman0@gmail.com> [aut, cre]")
+Description: The Phoenix event data set records social and political events
+    automatically extracted from news reporting. \code{phoxy} provides
+    functions to make acquiring and analyzing this event data easier. For more
+    information about Phoenix, see its website here:
+    \url{http://phoenixdata.org/} and the website of the Open Event Data
+    Alliance here: \url{http://openeventdata.org/}.
+Depends:
+    R (>= 3.1.0)
+URL: https://github.com/ahalterman/phoxy
+License: MIT
+Imports:
+    plyr,
+    dplyr,
+    rvest,
+    stringr,
+    RCurl
