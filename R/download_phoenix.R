@@ -16,7 +16,7 @@
 #' @rdname download_phoenix
 
 get_links <- function(){
-  library(rvest)
+  library(rvest) # I know...not best practices...
   data_page <- rvest::html("http://phoenixdata.org/data")
   
   page <- data_page %>%
@@ -42,7 +42,8 @@ download_phoenix <- function(destpath){
   
   # given a list of links, download them and write to specified directory
   dw_file <- function(link){
-    filename = gsub("https://s3.amazonaws.com/oeda/data/", "", link)
+    filename <- gsub("https://s3.amazonaws.com/oeda/data/", "", link)
+    filename <- paste0(destpath, filename)
     bin <- getBinaryURL(link, ssl.verifypeer=FALSE)
     con <- file(filename, open = "wb")
     writeBin(bin, con)
@@ -51,7 +52,7 @@ download_phoenix <- function(destpath){
     unlink(filename)
 }
   message("Downloading and unzipping files.")
-  plyr::l_ply(ll, dw_file, .progress = plyr::progress_text(char = '*'))
+  plyr::l_ply(ll, dw_file, .progress = plyr::progress_text(char = '='))
 }
 
 

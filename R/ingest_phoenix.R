@@ -38,7 +38,7 @@ ingest_phoenix <- function(dir, version = "auto", read_func = "read.csv"){
   }
   
   message("Reading in files...")
-  event_list  <- plyr::llply(files, read_one, .progress = plyr::progress_text(char = '*'))
+  event_list  <- plyr::llply(files, read_one, .progress = plyr::progress_text(char = '='))
   #event_list  <- lapply(files, read_one)
   events <- dplyr::rbind_all(event_list)
   #print(str(events))
@@ -47,7 +47,7 @@ ingest_phoenix <- function(dir, version = "auto", read_func = "read.csv"){
                      "TargetActorFull", "TargetActorEntity", "TargetActorRole", 
                      "TargetActorAttribute", "EventCode", "EventRootCode", "QuadClass", 
                      "GoldsteinScore", "Issues", "Lat", "Lon", 
-                     "LocationName", "StateName", "CountryName", "SentenceID", "URLs", 
+                     "LocationName", "StateName", "CountryCode", "SentenceID", "URLs", 
                      "NewsSources")
   return(events)
 }
