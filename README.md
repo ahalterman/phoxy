@@ -20,7 +20,7 @@ Installation
 Usage
 -----
 
-Currently, phoxy includes two basic functions.
+Currently, phoxy includes three basic functions.
 
 * `download_phoenix` takes a directory path and downloads the entire Phoenix
   dataset from [http://phoenixdata.org/data](http://phoenixdata.org/data) into
@@ -29,6 +29,9 @@ Currently, phoxy includes two basic functions.
 * `ingest_phoenix` reads in each daily text file from that directory, does some
   basic column name and class fixing, and combines them all into one large
   dataframe for easy analysis. 
+
+* `convert_cameo` will translate from CAMEO event codes to the human readable
+  definitions taken from the CAMEO codebook.
 
 Example:
 
