@@ -16,7 +16,7 @@
 #' 
 #' @rdname ingest_phoenix
 #' @export
-ingest_phoenix <- function(dir, version = "auto", read_func = "read.csv"){  
+ingest_phoenix <- function(dir, version = "auto", read_func = "read.csv", processing_function){  
   # Handle messy file paths
   lastletter <- stringr::str_sub(dir ,-1, -1)
   if (lastletter != "/"){
@@ -39,8 +39,8 @@ ingest_phoenix <- function(dir, version = "auto", read_func = "read.csv"){
   
   message("Reading in files...")
   event_list  <- plyr::llply(files, read_one, .progress = plyr::progress_text(char = '='))
-  #event_list  <- lapply(files, read_one)
-  events <- dplyr::rbind_all(event_list)
+  # bind everything together. Surpress this warning: "Unequal factor levels: coercing to character"
+  events <- suppressWarnings(dplyr::rbind_all(event_list))
   #print(str(events))
   names(events) <- c("EventID", "Date", "Year", "Month", "Day", "SourceActorFull", 
                      "SourceActorEntity", "SourceActorRole", "SourceActorAttribute", 
@@ -49,6 +49,8 @@ ingest_phoenix <- function(dir, version = "auto", read_func = "read.csv"){
                      "GoldsteinScore", "Issues", "Lat", "Lon", 
                      "LocationName", "StateName", "CountryCode", "SentenceID", "URLs", 
                      "NewsSources")
+  events$Date <- as.Date(lubridate::ymd(events$Date))  # use lubridate, then de-POSIX the date.
+  message("Process complete")
   return(events)
 }
 

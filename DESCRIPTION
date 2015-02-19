@@ -8,14 +8,16 @@ Description: The Phoenix event data set records social and political events
     information about Phoenix, see its website here:
     \url{http://phoenixdata.org/} and the website of the Open Event Data
     Alliance here: \url{http://openeventdata.org/}.
-Depends:
+Depends: 
     R (>= 3.1.0)
 URL: https://github.com/ahalterman/phoxy
 LazyData: true
 License: MIT
-Imports:
+Imports: 
     plyr,
     dplyr,
     rvest,
     stringr,
     RCurl
+Suggests: knitr
+VignetteBuilder: knitr
