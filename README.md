@@ -20,11 +20,16 @@ Installation
 Usage
 -----
 
-Currently, phoxy includes three basic functions.
+Currently, `phoxy` includes four basic functions:
 
 * `download_phoenix` takes a directory path and downloads the entire Phoenix
   dataset from [http://phoenixdata.org/data](http://phoenixdata.org/data) into
   that directory. 
+
+* `update_phoenix` takes a directory path and downloads any of the daily updates
+   to the Phoenix dataset that are missing from the directory. Running it on an
+   empty directory is equivalent to running `download_phoenix`, but it saves a
+   a lot of time and bandwidth if you're keeping the data up-to-date daily.
 
 * `ingest_phoenix` reads in each daily text file from that directory, does some
   basic column name and class fixing, and combines them all into one large
@@ -43,7 +48,7 @@ str(events)
 
 Classes ‘tbl_df’, ‘tbl’ and 'data.frame':   351386 obs. of  26 variables:
  $ EventID             : int  313122 313123 313124 313125 313126 313127 313128 313129 313130 313131 ...
- $ Date                : int  20140619 20140620 20140619 20140620 20140620 20140620 20140620 20140620 20140620 20140617 ...
+ $ Date                : Date, format: "2014-06-19" "2014-06-20" "2014-06-19" "2014-06-20" ...
  $ Year                : int  2014 2014 2014 2014 2014 2014 2014 2014 2014 2014 ...
  $ Month               : int  6 6 6 6 6 6 6 6 6 6 ...
  $ Day                 : int  19 20 19 20 20 20 20 20 20 17 ...
