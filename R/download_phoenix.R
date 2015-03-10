@@ -3,56 +3,61 @@
 #' Download and unzip all of the data files for the Phoenix dataset from the 
 #' Phoenix data website into a given directory.
 #'
-#' @param dir The path to download Phoenix into.
-#' @param version [Not yet implemented]. Download a specific version of Phoenix.
+#' @param destpath The path to the directory where Phoenix should go.
+#' @param phoenix_version. Download a specific version of Phoenix ("v0.1.0" or "current").
 #'
 #' @return NULL
 #' @author Andy Halterman
 #' @note This function, like Phoenix, is still in development and may contain errors and change quickly.
 #' @examples
 #'
-#' download_phoenix("~/OEDA/phoxy_test/")
+#' download_phoenix("~/OEDA/phoxy_test/", phoenix_version = "current")
 #'
 #' @rdname download_phoenix
 
-get_links <- function(){
+# get all the URLs on a page
+get_links <- function(phoenix_version){
   library(rvest) # I know...not best practices...
-  data_page <- rvest::html("http://phoenixdata.org/data")
-  
+  version_nodots <- gsub(".", "", phoenix_version, fixed=TRUE)
+  page_url <- paste0("http://phoenixdata.org/data/", version_nodots)
+  data_page <- rvest::html(page_url)
+  # Access the Phoenix API. http://xkcd.com/1481/
   page <- data_page %>%
     html_node("tbody") %>%
     html_text
   
-  page <- unlist(stringr::str_split(page, "\n"))
+  page <- unlist(stringr::str_split(page, " "))
   page <- stringr::str_trim(page)
   
-  links <- page[grep("https://s3.amazonaws.com/oeda/data/events", page)]
+  links <- gsub("\\d{4}\\-\\d{2}\\-\\d{2}$", "", page)
+  links <- links[links != ""]
   return(links)
 }
 
-
+# given a list of links, download them and write to specified directory
+dw_file <- function(link, destpath, phoenix_version){
+  version_nodots <- gsub(".", "", phoenix_version, fixed=TRUE)
+  baseurl <- paste0("https://s3.amazonaws.com/oeda/data/", version_nodots, "/")
+  filename <- gsub(baseurl, "", link)
+  filename <- paste0(destpath, filename)
+  bin <- getBinaryURL(link, ssl.verifypeer=FALSE)
+  con <- file(filename, open = "wb")
+  writeBin(bin, con)
+  close(con)
+  unzip(filename, exdir = destpath, unzip = "internal", setTimes = FALSE)
+  unlink(filename)
+}
 
 #' @export
 #' @importFrom plyr l_ply progress_text
-
-download_phoenix <- function(destpath){
-  # Get all the links on the page
+download_phoenix <- function(destpath, phoenix_version = "current"){
   library(RCurl)
-  ll <- get_links()
-  
-  # given a list of links, download them and write to specified directory
-  dw_file <- function(link){
-    filename <- gsub("https://s3.amazonaws.com/oeda/data/", "", link)
-    filename <- paste0(destpath, filename)
-    bin <- getBinaryURL(link, ssl.verifypeer=FALSE)
-    con <- file(filename, open = "wb")
-    writeBin(bin, con)
-    close(con)
-    unzip(filename, exdir = destpath, unzip = "internal", setTimes = FALSE)
-    unlink(filename)
-}
+  if (stringr::str_sub(destpath, -1) != "/"){
+    stop("Destination paths need to have trailing forward slashes")
+  }
+  ll <- get_links(phoenix_version = phoenix_version)
   message("Downloading and unzipping files.")
-  plyr::l_ply(ll, dw_file, .progress = plyr::progress_text(char = '='))
+  plyr::l_ply(ll, dw_file, phoenix_version = phoenix_version, destpath = destpath, .progress = plyr::progress_text(char = '='))
 }
 
 
