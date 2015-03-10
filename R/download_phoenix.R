@@ -3,24 +3,25 @@
 #' Download and unzip all of the data files for the Phoenix dataset from the 
 #' Phoenix data website into a given directory.
 #'
-#' @param dir The path to download Phoenix into.
-#' @param version [Not yet implemented]. Download a specific version of Phoenix.
+#' @param destpath The path to the directory where Phoenix should go.
+#' @param phoenix_version. Download a specific version of Phoenix ("v0.1.0" or "current").
 #'
 #' @return NULL
 #' @author Andy Halterman
 #' @note This function, like Phoenix, is still in development and may contain errors and change quickly.
 #' @examples
 #'
-#' download_phoenix("~/OEDA/phoxy_test/")
+#' download_phoenix("~/OEDA/phoxy_test/", phoenix_version = "current")
 #'
 #' @rdname download_phoenix
 
 # get all the URLs on a page
 get_links <- function(phoenix_version){
   library(rvest) # I know...not best practices...
-  page_url <- paste0("http://phoenixdata.org/data/", phoenix_version)
+  version_nodots <- gsub(".", "", phoenix_version, fixed=TRUE)
+  page_url <- paste0("http://phoenixdata.org/data/", version_nodots)
   data_page <- rvest::html(page_url)
-  
+  # Access the Phoenix API. http://xkcd.com/1481/
   page <- data_page %>%
     html_node("tbody") %>%
     html_text
@@ -35,9 +36,13 @@ get_links <- function(phoenix_version){
 
 # given a list of links, download them and write to specified directory
 dw_file <- function(link, destpath, phoenix_version){
-  baseurl <- paste0("https://s3.amazonaws.com/oeda/data/", phoenix_version, "/")
+  version_nodots <- gsub(".", "", phoenix_version, fixed=TRUE)
+  baseurl <- paste0("https://s3.amazonaws.com/oeda/data/", version_nodots, "/")
+  print(baseurl)
   filename <- gsub(baseurl, "", link)
+  print(filename)
   filename <- paste0(destpath, filename)
+  print(filename)
   bin <- getBinaryURL(link, ssl.verifypeer=FALSE)
   con <- file(filename, open = "wb")
   writeBin(bin, con)
