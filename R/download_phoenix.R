@@ -38,11 +38,8 @@ get_links <- function(phoenix_version){
 dw_file <- function(link, destpath, phoenix_version){
   version_nodots <- gsub(".", "", phoenix_version, fixed=TRUE)
   baseurl <- paste0("https://s3.amazonaws.com/oeda/data/", version_nodots, "/")
-  print(baseurl)
   filename <- gsub(baseurl, "", link)
-  print(filename)
   filename <- paste0(destpath, filename)
-  print(filename)
   bin <- getBinaryURL(link, ssl.verifypeer=FALSE)
   con <- file(filename, open = "wb")
   writeBin(bin, con)

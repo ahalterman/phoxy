@@ -4,7 +4,7 @@
 #' them all in, name them correctly, and combine them into one dataframe.
 #'
 #' @param dir The path to the Phoenix folder.
-#' @param version [Not yet implemented]. Use the appropriate function for each Phoenix version.
+#' @param phoenix_version [Not yet implemented]. Use the appropriate function for each Phoenix version.
 #' @param read_func [Not yet implemented]. Use an alternative reading function like \code{fread} or \code{read_csv}.
 #'
 #' @return A single dataframe with all the Phoenix events in the folder.
@@ -16,7 +16,7 @@
 #' 
 #' @rdname ingest_phoenix
 #' @export
-ingest_phoenix <- function(dir, version = "auto", read_func = "read.csv", processing_function){  
+ingest_phoenix <- function(dir, phoenix_version = "auto", read_func = "read.csv", processing_function){  
   # Handle messy file paths
   lastletter <- stringr::str_sub(dir ,-1, -1)
   if (lastletter != "/"){
@@ -25,8 +25,7 @@ ingest_phoenix <- function(dir, version = "auto", read_func = "read.csv", proces
   
   files <- list.files(dir)
   files <- paste0(dir, files)
-  #eventColClasses <- c(rep("integer", 5), rep("character", 8), rep("factor", 3), 
-  #                     "numeric", "character", "numeric", "numeric", rep("character", 6))
+  # I would set the col classes here, but was causing errors. Done later, which is slower but stable.
   eventColClasses <- c(rep("character", 26))
   # A reading function with some error catching.
   read_one <- function(file){
