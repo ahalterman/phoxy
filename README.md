@@ -20,11 +20,7 @@ Installation
 Usage
 -----
 
-<<<<<<< HEAD
 Currently, `phoxy` includes four basic functions:
-=======
-Currently, phoxy includes four basic functions.
->>>>>>> Update with description for update_phoenix() and func changes
 
 * `download_phoenix` takes a directory path and version number and downloads
   the entire Phoenix dataset (of that version) from
@@ -54,6 +50,9 @@ events <- ingest_phoenix("~/OEDA/phoxy_test/")
 
 > str(events)
 
+Classes ‘tbl_df’, ‘tbl’ and 'data.frame':	699429 obs. of  26 variables:
+ $ EventID             : chr  "0_v0.2.0" "1_v0.2.0" "2_v0.2.0" "3_v0.2.0" ...
+ $ Date                : Date, format: "2014-06-20" "2014-06-20" "2014-06-20" "2014-06-16" ...
  $ Year                : int  2014 2014 2014 2014 2014 2014 2014 2014 2014 2014 ...
  $ Month               : int  6 6 6 6 6 6 6 6 6 6 ...
  $ Day                 : int  20 20 20 16 20 20 19 20 20 20 ...
