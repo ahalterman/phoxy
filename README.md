@@ -27,17 +27,16 @@ Currently, `phoxy` includes four basic functions:
   [http://phoenixdata.org/data](http://phoenixdata.org/data) into the given
   directory. It currenty accepts two versions: "current" and "v0.1.0".
 
-* `update_phoenix` takes a directory path and downloads any of the daily updates
-   to the Phoenix dataset that are missing from the directory. Running it on an
-   empty directory is equivalent to running `download_phoenix`, but it saves a
-   a lot of time and bandwidth if you're keeping the data up-to-date daily.
+* `update_phoenix` takes a directory path that contains Phoenix files and
+  downloads any of the daily updates that are missing from the directory.
+  Running it on an empty directory is equivalent to running `download_phoenix`,
+  and running it daily will make sure you always have yesterday's data
+  downloaded.
 
 * `ingest_phoenix` reads in each daily text file from that directory, does some
   basic column name and class fixing, and combines them all into one large
   dataframe for easy analysis. 
 
-* `update_phoenix` will find event data files on the website that aren't
-  currently in a specified directory and download just those missing files.
 
 * `convert_cameo` will translate from CAMEO event codes to the human readable
   definitions taken from the CAMEO codebook.
