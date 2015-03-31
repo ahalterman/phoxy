@@ -1,14 +1,16 @@
 phoxy
 =====
 
-Download, ingest, and analyze the Phoenix event dataset.
+Download, ingest, and analyze the Phoenix and ICEWS event datasets.
 
 The Phoenix event data set records social and political events
 automatically extracted from news reporting. `phoxy` provides
 functions to make acquiring and analyzing this event data easier. For more
 information about Phoenix, see its website here:
 [http://phoenixdata.org/](http://phoenixdata.org/) and the website of the Open Event Data
-Alliance here: [http://openeventdata.org/](http://openeventdata.org).
+Alliance here: [http://openeventdata.org/](http://openeventdata.org). `phoxy`
+now includes basic functionality for working with the
+[ICEWS](http://thedata.harvard.edu/dvn/dv/icews/faces/study/StudyPage.xhtml;jsessionid=f6f5590ec5309632fa4ccb4f99b2?globalId=doi:10.7910/DVN/28075&studyListingIndex=0_f6f5590ec5309632fa4ccb4f99b2) event dataset.
 
 `phoxy`, like the Phoenix event dataset, is still under beta development and will
 change greatly. Bug reports are welcome.
@@ -20,7 +22,7 @@ Installation
 Usage
 -----
 
-Currently, `phoxy` includes four basic functions:
+Currently, `phoxy` includes the following functions:
 
 * `download_phoenix` takes a directory path and version number and downloads
   the entire Phoenix dataset (of that version) from
@@ -37,6 +39,8 @@ Currently, `phoxy` includes four basic functions:
   basic column name and class fixing, and combines them all into one large
   dataframe for easy analysis. 
 
+* `ingest_icews` reads in a directory of files containing the ICEWS event
+  dataset.
 
 * `convert_cameo` will translate from CAMEO event codes to the human readable
   definitions taken from the CAMEO codebook.
