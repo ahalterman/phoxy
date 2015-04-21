@@ -9,8 +9,8 @@ functions to make acquiring and analyzing this event data easier. For more
 information about Phoenix, see its website here:
 [http://phoenixdata.org/](http://phoenixdata.org/) and the website of the Open Event Data
 Alliance here: [http://openeventdata.org/](http://openeventdata.org). `phoxy`
-now includes basic functionality for working with the
-[ICEWS](http://thedata.harvard.edu/dvn/dv/icews/faces/study/StudyPage.xhtml;jsessionid=f6f5590ec5309632fa4ccb4f99b2?globalId=doi:10.7910/DVN/28075&studyListingIndex=0_f6f5590ec5309632fa4ccb4f99b2) event dataset.
+also includes basic functionality for working with the
+[ICEWS](https://dataverse.harvard.edu/dataverse/icews) event dataset.
 
 `phoxy`, like the Phoenix event dataset, is still under beta development and will
 change greatly. Bug reports are welcome.
@@ -28,6 +28,9 @@ Currently, `phoxy` includes the following functions:
   the entire Phoenix dataset (of that version) from
   [http://phoenixdata.org/data](http://phoenixdata.org/data) into the given
   directory. It currenty accepts two versions: "current" and "v0.1.0".
+
+* `download_icews` takes a directory path and downloads the entire ICEWS event
+  dataset from [https://dataverse.harvard.edu/dataverse/icews](https://dataverse.harvard.edu/dataverse/icews).
 
 * `update_phoenix` takes a directory path that contains Phoenix files and
   downloads any of the daily updates that are missing from the directory.
