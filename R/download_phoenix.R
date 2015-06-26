@@ -37,7 +37,7 @@ get_links <- function(phoenix_version){
 # given a list of links, download them and write to specified directory
 dw_file <- function(link, destpath, phoenix_version){
   version_nodots <- gsub(".", "", phoenix_version, fixed=TRUE)
-  baseurl <- paste0("https://s3.amazonaws.com/oeda/data/", version_nodots, "/")
+  baseurl <- paste0("https://s3.amazonaws.com/openeventdata/", version_nodots, "/")
   filename <- gsub(baseurl, "", link)
   filename <- paste0(destpath, filename)
   bin <- getBinaryURL(link, ssl.verifypeer=FALSE)
