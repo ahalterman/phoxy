@@ -48,7 +48,7 @@ ingest_phoenix <- function(dir, phoenix_version = "auto", read_func = "read.csv"
   names(events) <- c("EventID", "Date", "Year", "Month", "Day", "SourceActorFull", 
                      "SourceActorEntity", "SourceActorRole", "SourceActorAttribute", 
                      "TargetActorFull", "TargetActorEntity", "TargetActorRole", 
-                     "TargetActorAttribute", "EventCode", "EventRootCode", "QuadClass", 
+                     "TargetActorAttribute", "EventCode", "EventRootCode", "PentaClass", 
                      "GoldsteinScore", "Issues", "Lat", "Lon", 
                      "LocationName", "StateName", "CountryCode", "SentenceID", "URLs", 
                      "NewsSources")
