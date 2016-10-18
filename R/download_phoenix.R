@@ -27,13 +27,16 @@ get_links <- function (phoenix_version = 'current') {
   if (!grepl('^(v|current)', phoenix_version)) # if the user submitted a version without 'v'
     phoenix_version <- paste0('v', phoenix_version)
 
-  # Access the Phoenix API. http://xkcd.com/1481/
-  url <- paste0('http://phoenixdata.org/data/', phoenix_version)
-  page <- XML::htmlParse(url)
-  all_links <- as.vector(XML::xpathSApply(page, "//a/@href")) # xpath to extract url strings
-  links <- all_links[grepl('zip$', all_links)] # only links ending with "zip"
-
-  return(links)
+  # Access the Phoenix API. 
+url <- "http://phoenixdata.org/data"
+  page <- xml2::read_html(url)
+  table_links <- page %>%
+    rvest::html_nodes("a") %>%  #find all links
+    rvest::html_attr("href") %>%  #get the url
+    stringr::str_subset("\\.zip") %>%  #find those that end in zip
+    xml2::url_absolute(url)
+  
+  return(table_links)
 }
 
 
@@ -48,7 +51,7 @@ dw_file <- function(link, destpath) {
 
   # download method
   if (.Platform$OS.type == 'windows')
-    download_method <- 'auto'
+    download_method <- 'wininet'
   else
     download_method <- 'curl'
 
